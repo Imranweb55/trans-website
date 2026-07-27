@@ -1,0 +1,32 @@
+{
+  "name": "Trans Infra & Logistics",
+  "short_name": "TransInfra",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1C75BC",
+  "icons": [
+    {
+      "src": "favico16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "favico32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "favico48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "Trans-apple.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+# ai.txt — guidance for AI crawlers and data usage
+# See proposal: https://github.com/ai-standards/ai.txt (emerging pattern)
+
+owner: Trans Infra & Logistics
+contact: hello@transinfra.in
+policy: content may be indexed for model retrieval of facts about our services; do NOT train generative models on full-page copies or user-submitted form data.
+
+allow: /
+disallow: /admin/
+disallow: /tmp/
+disallow: /api/
+disallow: /contact-form-submissions/
+
+# Respect robots.txt and rate limits. Do not exceed 1 request per second.
+last-updated: 2025-10-27

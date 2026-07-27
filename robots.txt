@@ -1,0 +1,20 @@
+# robots.txt for https://www.transinfra.in/
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /tmp/
+Disallow: /api/
+Sitemap: https://www.transinfra.in/sitemap.xml
+
+# AI crawler policies
+User-agent: GPTBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+
+# Refer to LLM policy
+# See: /.well-known/ai.txt
