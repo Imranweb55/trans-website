@@ -1687,3 +1687,20 @@ footer .ratio.rounded-2:hover {
     gap: 20px
   }
 }
+
+/* =========================================================================
+   HERO SCROLL-VIDEO — GPU-accelerated hints only.
+   Additive block, does not change size/position/color of anything above;
+   see assets/js/hero-scroll-video.js for the ScrollTrigger scrub logic.
+   ========================================================================= */
+.hero .hero-video {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* GSAP's pin-spacer wraps .hero while it's pinned; make sure it never
+   introduces an unwanted max-width/centering constraint from Bootstrap. */
+.hero[data-scrub-length] {
+  will-change: transform;
+}
