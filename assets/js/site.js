@@ -12,7 +12,6 @@
     // (and critically, the scroll-reveal content) must still work.
     var steps = [
       setYear,
-      initPreloader,
       initScrollProgress,
       initNavbarSolid,
       initReveal,
@@ -47,27 +46,6 @@
   function setYear() {
     var yEl = document.getElementById("y");
     if (yEl) yEl.textContent = new Date().getFullYear();
-  }
-
-  // ---- Preloader --------------------------------------------------------
-  function initPreloader() {
-    var pre = document.querySelector(".preloader");
-    if (!pre) return;
-    var done = function () {
-      pre.classList.add("is-done");
-      setTimeout(function () {
-        pre.remove();
-      }, 600);
-    };
-    if (document.readyState === "complete") {
-      setTimeout(done, 250);
-    } else {
-      window.addEventListener("load", function () {
-        setTimeout(done, 250);
-      });
-      // safety net so it never blocks the page
-      setTimeout(done, 2500);
-    }
   }
 
   // ---- Scroll progress bar ----------------------------------------------

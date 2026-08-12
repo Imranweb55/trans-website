@@ -46,6 +46,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--nav-h);
+  overflow-x: hidden;
 }
 
 body {
@@ -53,6 +54,7 @@ body {
   background: var(--paper);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 h1,
@@ -111,69 +113,108 @@ select:focus-visible {
 }
 
 /* =========================================================================
-   PRELOADER
+   PAGE TRANSITION — premium light-streak sweep (replaces old preloader)
+   Plays once on page entrance, and again (faster) when leaving via an
+   internal link — see assets/js/page-transition.js
    ========================================================================= */
-.preloader {
+.page-transition {
   position: fixed;
   inset: 0;
-  z-index: 3000;
+  z-index: 4000;
   background: var(--ink);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  transition: opacity .5s ease, visibility .5s ease;
-}
-
-.preloader.is-done {
-  opacity: 0;
-  visibility: hidden;
+  overflow: hidden;
+  opacity: 1;
+  visibility: visible;
   pointer-events: none;
 }
 
-.preloader .rig {
-  width: 56px;
-  height: 56px;
-  position: relative;
-}
-
-.preloader .rig::before,
-.preloader .rig::after {
-  content: "";
+.page-transition .pt-streak {
   position: absolute;
-  border-radius: 50%;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 46%;
+  transform: translateX(-220%) skewX(-18deg);
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(61, 150, 217, 0) 10%,
+      rgba(61, 150, 217, .35) 30%,
+      #fff 50%,
+      rgba(61, 150, 217, .35) 70%,
+      rgba(61, 150, 217, 0) 90%,
+      transparent 100%);
+  filter: blur(1px);
+  will-change: transform;
 }
 
-.preloader .rig::before {
-  inset: 0;
-  border: 3px solid rgba(255, 255, 255, .14);
-}
-
-.preloader .rig::after {
-  inset: 0;
-  border: 3px solid transparent;
-  border-top-color: var(--safety);
-  border-right-color: var(--hazard);
-  animation: spin 0.9s linear infinite;
-}
-
-.preloader .brandmark {
+.page-transition .pt-text {
+  position: relative;
+  z-index: 2;
   color: #fff;
+  font-family: var(--font-display);
   font-weight: 700;
-  letter-spacing: .14em;
+  letter-spacing: .22em;
   text-transform: uppercase;
-  font-size: .85rem;
-  opacity: .85;
+  font-size: clamp(1.05rem, 2.6vw, 1.5rem);
+  opacity: 0;
+  transform: translateY(6px) scale(.97);
 }
 
-@keyframes spin {
+/* ---- Entrance (page just loaded): streak sweeps, text reveals, whole
+   overlay fades away to reveal the page — total ~700ms ---- */
+.page-transition.pt-run .pt-streak {
+  animation: ptStreak .55s var(--ease-out) forwards;
+}
+
+.page-transition.pt-run .pt-text {
+  animation: ptText .35s ease-out .1s forwards;
+}
+
+.page-transition.pt-run {
+  animation: ptFade .25s ease .48s forwards;
+}
+
+/* ---- Exit (navigating to another page): snap visible, quick sweep,
+   then JS navigates — total ~400ms ---- */
+.page-transition.pt-exit {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.page-transition.pt-exit .pt-streak {
+  animation: ptStreak .4s var(--ease-out) forwards;
+}
+
+.page-transition.pt-exit .pt-text {
+  animation: ptText .3s ease-out forwards;
+}
+
+@keyframes ptStreak {
   to {
-    transform: rotate(360deg);
+    transform: translateX(220%) skewX(-18deg);
+  }
+}
+
+@keyframes ptText {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes ptFade {
+  to {
+    opacity: 0;
+    visibility: hidden;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .preloader {
+  .page-transition {
     display: none !important;
   }
 }
@@ -1704,4 +1745,3 @@ footer .ratio.rounded-2:hover {
 .hero[data-scrub-length] {
   will-change: transform;
 }
-
